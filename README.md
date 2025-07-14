@@ -1,2 +1,2 @@
-# epsilon-ui
-ui library, straight to the point.
+# source code of epsilon \\ ui
+Enjoy!
