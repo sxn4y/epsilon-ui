@@ -18,10 +18,17 @@ if (command === "add" && component) {
   fs.mkdirSync(destPath, { recursive: true });
 
   fs.readdirSync(templatePath).forEach((file) => {
-    const src = path.join(templatePath, file);
-    const dest = path.join(destPath, file);
-    fs.copyFileSync(src, dest);
+    fs.copyFileSync(
+      path.join(templatePath, file),
+      path.join(destPath, file)
+    );
   });
+
+  // adding epsilon.css to components/ui
+  fs.copyFileSync(
+    path.join(__dirname, "..", "components", "epsilon.css"),
+    path.join(destPath, "epsilon.css")
+  );
 
   console.log(`✅ Added component "${component}" to components/ui`);
 } else {

@@ -1,6 +1,6 @@
 {
   "name": "epsilon-ui",
-  "version": "1.0.11",
+  "version": "1.0.14",
   "bin": {
     "epsilon-ui": "./bin/index.cjs"
   },

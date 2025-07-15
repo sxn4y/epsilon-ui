@@ -1,7 +1,7 @@
 "use client";
 
 import React, { ReactNode, useEffect } from "react";
-import "./glow-effect.css";
+import "./epsilon.css";
 
 export interface ButtonProps {
   children?: ReactNode;
