@@ -3,34 +3,34 @@
 const fs = require("fs");
 const path = require("path");
 
-// Get component name
-const [, , command, component] = process.argv;
+const [, , command, ...components] = process.argv;
 
-if (command === "add" && component) {
+if (command !== "add" || components.length === 0) {
+  console.log("Usage: npx epsilon-ui add <component...>");
+  process.exit(1);
+}
+
+const destPath = path.resolve(process.cwd(), "components", "ui");
+fs.mkdirSync(destPath, { recursive: true });
+
+components.forEach((component) => {
   const templatePath = path.join(__dirname, "..", "components", component);
-  const destPath = path.resolve(process.cwd(), "components/ui");
 
   if (!fs.existsSync(templatePath)) {
     console.error(`❌ Component "${component}" not found.`);
-    process.exit(1);
+    return;
   }
-
-  fs.mkdirSync(destPath, { recursive: true });
 
   fs.readdirSync(templatePath).forEach((file) => {
     fs.copyFileSync(
-      path.join(templatePath, file),
+      path.join(templatePath, file), 
       path.join(destPath, file)
     );
+    console.log(`✅ Added ${file} to ${destPath}`);
   });
+});
 
-  // adding epsilon.css to components/ui
-  fs.copyFileSync(
-    path.join(__dirname, "..", "components", "epsilon.css"),
-    path.join(destPath, "epsilon.css")
-  );
-
-  console.log(`✅ Added component "${component}" to components/ui`);
-} else {
-  console.log("Usage: pnpm dlx epsilon-ui add <component>");
-}
+fs.copyFileSync(
+  path.join(__dirname, "..", "components", "epsilon.css"),
+  path.join(destPath, "epsilon.css")
+);
