@@ -15,7 +15,15 @@ interface NavItemProps {
   children?: ReactNode;
   className?: string;
   href?: string;
-  active?: boolean;
+  disabled?: boolean;
+  variant?:
+    | "primary"
+    | "secondary"
+    | "outline"
+    | "positive"
+    | "danger"
+    | "link"
+    | "fancy";
 }
 
 const NavBar: React.FC<NavBarProps> = ({
@@ -109,13 +117,14 @@ const NavBar: React.FC<NavBarProps> = ({
 
 const NavItem: React.FC<NavItemProps> = ({
   children,
-  className = "",
+  className,
   href = "#",
-  active = false,
+  disabled = false,
+  variant = "link",
 }) => {
   return (
     <a href={href}>
-      <Button variant="link">{children}</Button>
+      <Button variant={variant} disabled={disabled} className={className}>{children}</Button>
     </a>
   );
 };
