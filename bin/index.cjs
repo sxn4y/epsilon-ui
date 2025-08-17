@@ -22,22 +22,21 @@ components.forEach((component) => {
   }
 
   fs.readdirSync(templatePath).forEach((file) => {
-    fs.copyFileSync(
-      path.join(templatePath, file), 
-      path.join(destPath, file)
-    );
+    fs.copyFileSync(path.join(templatePath, file), path.join(destPath, file));
     console.log(`\n✅ Added ${file} to ${destPath}`);
   });
 });
 
-console.log("\nAll specified components have been added successfully.\nSyncing global components...\n");
+console.log(
+  "\nAll specified components have been added successfully.\nSyncing global components...\n"
+);
 
-fs.readdirSync(path.join(__dirname, "..", "components")).forEach(
-  (file) => {
-    fs.copyFileSync(
-      path.join(path.join(__dirname, "..", "components"), file),
-      path.join(destPath, file)
-    );
-    console.log(`\n✅ Added ${file} to ${destPath}`);
-  }
+fs.copyFileSync(
+  path.join(path.join(__dirname, "..", "components"), "epsilon.css"),
+  path.join(destPath, "epsilon.css")
+);
+
+fs.copyFileSync(
+  path.join(path.join(__dirname, "..", "components"), "epsilon.tsx"),
+  path.join(destPath, "epsilon.tsx")
 );
