@@ -2,6 +2,7 @@
 
 import React, { ReactNode, useEffect } from "react";
 import "./epsilon.css";
+import { applyParallax } from "./epsilon";
 
 export interface ButtonProps {
   children?: ReactNode;
@@ -104,41 +105,7 @@ const Button: React.FC<ButtonProps> = ({
   }
 
   useEffect(() => {
-    const button = buttonRef.current;
-    let handleMouseMove = (e: MouseEvent) => {},
-      handleMouseLeave = () => {};
-
-    if (!button) return;
-
-    if (parallax) {
-      handleMouseMove = (e: MouseEvent) => {
-        const rect = button.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        const tiltX = (y - centerY) / (button.clientHeight / tiltFactor);
-        const tiltY = (centerX - x) / (button.clientWidth / tiltFactor);
-
-        button.style.setProperty("--x", `${x}%`);
-        button.style.setProperty("--y", `${y}%`);
-        button.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
-      };
-
-      handleMouseLeave = () => {
-        button.style.transform =
-          "perspective(1000px) rotateX(0deg) rotateY(0deg)";
-      };
-
-      button.addEventListener("mousemove", handleMouseMove);
-
-      button.addEventListener("mouseleave", handleMouseLeave);
-    }
-
-    return () => {
-      button.removeEventListener("mousemove", handleMouseMove);
-      button.removeEventListener("mouseleave", handleMouseLeave);
-    };
+    applyParallax(buttonRef, parallax, tiltFactor);
   });
 
   return (

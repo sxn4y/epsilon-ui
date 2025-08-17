@@ -17,7 +17,7 @@ components.forEach((component) => {
   const templatePath = path.join(__dirname, "..", "components", component);
 
   if (!fs.existsSync(templatePath)) {
-    console.error(`❌ Component "${component}" not found.`);
+    console.error(`\n❌ Component "${component}" not found.`);
     return;
   }
 
@@ -26,11 +26,18 @@ components.forEach((component) => {
       path.join(templatePath, file), 
       path.join(destPath, file)
     );
-    console.log(`✅ Added ${file} to ${destPath}`);
+    console.log(`\n✅ Added ${file} to ${destPath}`);
   });
 });
 
-fs.copyFileSync(
-  path.join(__dirname, "..", "components", "epsilon.css"),
-  path.join(destPath, "epsilon.css")
+console.log("\nAll specified components have been added successfully.\nSyncing global components...\n");
+
+fs.readdirSync(path.join(__dirname, "..", "components")).forEach(
+  (file) => {
+    fs.copyFileSync(
+      path.join(path.join(__dirname, "..", "components"), file),
+      path.join(destPath, file)
+    );
+    console.log(`\n✅ Added ${file} to ${destPath}`);
+  }
 );

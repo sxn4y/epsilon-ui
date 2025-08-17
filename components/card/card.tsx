@@ -2,6 +2,7 @@
 
 import React, { ReactNode, useEffect } from "react";
 import "./epsilon.css";
+import { applyParallax } from "./epsilon";
 
 export interface CardProps {
   children?: ReactNode;
@@ -70,41 +71,7 @@ const Card: React.FC<CardProps> = ({
   }
 
   useEffect(() => {
-    const card = cardRef.current;
-    let handleMouseMove = (e: MouseEvent) => {},
-      handleMouseLeave = () => {};
-
-    if (!card) return;
-
-    if (parallax) {
-      handleMouseMove = (e: MouseEvent) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        const tiltX = (y - centerY) / (card.clientHeight / tiltFactor);
-        const tiltY = (centerX - x) / (card.clientWidth / tiltFactor);
-
-        card.style.setProperty("--x", `${x}%`);
-        card.style.setProperty("--y", `${y}%`);
-        card.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
-      };
-
-      handleMouseLeave = () => {
-        card.style.transform =
-          "perspective(1000px) rotateX(0deg) rotateY(0deg)";
-      };
-
-      card.addEventListener("mousemove", handleMouseMove);
-
-      card.addEventListener("mouseleave", handleMouseLeave);
-    }
-
-    return () => {
-      card.removeEventListener("mousemove", handleMouseMove);
-      card.removeEventListener("mouseleave", handleMouseLeave);
-    };
+    applyParallax(cardRef, parallax, tiltFactor);
   });
 
   return (
