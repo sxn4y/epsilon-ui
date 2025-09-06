@@ -37,7 +37,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const jsx_runtime_1 = require("react/jsx-runtime");
 const react_1 = __importStar(require("react"));
 require("epsilon-ui/dist/epsilon.css");
-const epsilon_1 = require("../epsilon");
+const epsilon_1 = require("epsilon-ui/dist/components/epsilon");
 const Card = ({ children, className = "w-fit h-[100px]", parallax = false, tiltFactor = 20, variant = "secondary", }) => {
     const cardRef = react_1.default.useRef(null);
     // Memoize touch device detection

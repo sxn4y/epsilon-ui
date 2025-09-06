@@ -1,6 +1,6 @@
 {
   "name": "epsilon-ui",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "bin": {
     "epsilon-ui": "bin/index.cjs"
   },
@@ -126,7 +126,7 @@
     "yallist": "^5.0.0"
   },
   "scripts": {
-    "build": "tsc && cp components/epsilon.css dist/epsilon.css",
+    "build": "tsc && cp components/epsilon.css dist/epsilon.css && node scripts/fix-imports.js",
     "prepublishOnly": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

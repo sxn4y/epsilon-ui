@@ -41,7 +41,7 @@ exports.NavItem = exports.NavBar = void 0;
 const jsx_runtime_1 = require("react/jsx-runtime");
 const react_1 = __importStar(require("react"));
 require("epsilon-ui/dist/epsilon.css");
-const button_1 = __importDefault(require("../button/button"));
+const button_1 = __importDefault(require("epsilon-ui/dist/components/button/button"));
 const NavBar = ({ children, className = "", brand, variant = "primary", }) => {
     const [isOpen, setIsOpen] = (0, react_1.useState)(false);
     const [isMobile, setIsMobile] = (0, react_1.useState)(false);
