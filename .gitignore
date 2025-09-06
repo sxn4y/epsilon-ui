@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# prevent generated js files in components
+components/**/*.js
+components/**/*.js.map
