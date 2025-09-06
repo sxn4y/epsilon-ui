@@ -1,7 +1,7 @@
 "use client";
 
-import React, { ReactNode, useEffect } from "react";
-import "./epsilon.css";
+import React, { ReactNode, useEffect, useMemo, useCallback } from "react";
+import "epsilon-ui/dist/epsilon.css";
 
 export interface TextBoxProps {
   className?: string;
@@ -49,42 +49,51 @@ const TextBox: React.FC<TextBoxProps> = ({
   variant = "primary",
 }) => {
   const textBoxRef = React.useRef<HTMLInputElement>(null);
-  const isTouchDevice = () => {
+  
+  // Memoize touch device detection
+  const isTouchDevice = useMemo(() => {
     if (typeof window !== "undefined") {
       return "ontouchstart" in window || navigator.maxTouchPoints > 0;
     }
     return false;
-  };
+  }, []);
 
-  if (isTouchDevice()) {
-    tiltFactor = 0;
-  }
+  // Memoize effective tilt factor
+  const effectiveTiltFactor = useMemo(() => {
+    return isTouchDevice ? 0 : tiltFactor;
+  }, [isTouchDevice, tiltFactor]);
 
-  let inBuiltClass =
-    "px-3 py-1.5 rounded-(--s2) text-(length:--s3) text-(--background) bg-(--foreground) font-medium overflow-hidden outline-(--foreground)/50 outline-0 delay-25 transition-[outline] transition-[background] hover:bg-(--foreground)/90 focus:outline-3";
+  // Memoize variant classes
+  const inBuiltClass = useMemo(() => {
+    const baseClasses = "px-3 py-1.5 rounded-(--s2) text-(length:--s3) font-medium overflow-hidden outline-0 delay-25 transition-[outline] transition-[background]";
+    
+    switch (variant) {
+      case "secondary":
+        return `${baseClasses} text-(--foreground) bg-(--foreground)/10 outline-(--foreground)/5 hover:bg-(--foreground)/9 focus:outline-3`;
+      case "outline":
+        return `${baseClasses} text-(--foreground) border border-(--foreground)/20 bg-(--foreground)/10 outline-(--foreground)/7 hover:bg-(--foreground)/9 focus:outline-3`;
+      case "fancy":
+        return `${baseClasses} text-(--foreground) border border-(--foreground)/20 bg-linear-to-b from-(--foreground)/10 to-(--foreground)/6 outline-(--foreground)/7 hover:bg-(--foreground)/2 focus:outline-3`;
+      default:
+        return `${baseClasses} text-(--background) bg-(--foreground) outline-(--foreground)/50 hover:bg-(--foreground)/90 focus:outline-3`;
+    }
+  }, [variant]);
 
-  switch (variant) {
-    case "secondary":
-      inBuiltClass =
-        "px-3 py-1.5 rounded-(--s2) text-(length:--s3) text-(--foreground) bg-(--foreground)/10 font-medium overflow-hidden outline-(--foreground)/5 outline-0 delay-25 transition-[outline] transition-[background] hover:bg-(--foreground)/9 focus:outline-3";
-      break;
-    case "outline":
-      inBuiltClass =
-        "px-3 py-1.5 rounded-(--s2) text-(length:--s3) text-(--foreground) border border-(--foreground)/20 bg-(--foreground)/10 font-medium overflow-hidden outline-(--foreground)/7 outline-0 delay-25 transition-[outline] transition-[background] hover:bg-(--foreground)/9 focus:outline-3";
-      break;
-      break;
-    case "fancy":
-      inBuiltClass =
-        "px-3 py-1.5 rounded-(--s2) text-(length:--s3) text-(--foreground) border border-(--foreground)/20 bg-linear-to-b from-(--foreground)/10 to-(--foreground)/6 font-medium overflow-hidden outline-(--foreground)/7 outline-0 delay-25 transition-[outline] transition-[background] hover:bg-(--foreground)/2 focus:outline-3";
-      break;
-  }
+  // Memoize event handlers
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    onChange?.(e);
+  }, [onChange]);
+
+  const handleFocus = useCallback((e: React.FocusEvent<HTMLInputElement>) => {
+    onFocus?.(e);
+  }, [onFocus]);
 
   useEffect(() => {
     const textBox = textBoxRef.current;
-    let handleMouseMove = (e: MouseEvent) => {},
-      handleMouseLeave = () => {};
-
     if (!textBox) return;
+
+    let handleMouseMove = (e: MouseEvent) => {};
+    let handleMouseLeave = () => {};
 
     if (parallax) {
       handleMouseMove = (e: MouseEvent) => {
@@ -93,8 +102,8 @@ const TextBox: React.FC<TextBoxProps> = ({
         const y = e.clientY - rect.top;
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
-        const tiltX = (y - centerY) / (textBox.clientHeight / tiltFactor);
-        const tiltY = (centerX - x) / (textBox.clientWidth / tiltFactor);
+        const tiltX = (y - centerY) / (textBox.clientHeight / effectiveTiltFactor);
+        const tiltY = (centerX - x) / (textBox.clientWidth / effectiveTiltFactor);
 
         textBox.style.setProperty("--x", `${x}%`);
         textBox.style.setProperty("--y", `${y}%`);
@@ -107,7 +116,6 @@ const TextBox: React.FC<TextBoxProps> = ({
       };
 
       textBox.addEventListener("mousemove", handleMouseMove);
-
       textBox.addEventListener("mouseleave", handleMouseLeave);
     }
 
@@ -117,7 +125,7 @@ const TextBox: React.FC<TextBoxProps> = ({
       textBox.removeEventListener("mousemove", handleMouseMove);
       textBox.removeEventListener("mouseleave", handleMouseLeave);
     };
-  });
+  }, [parallax, effectiveTiltFactor, value]);
 
   return (
     <input
@@ -131,11 +139,12 @@ const TextBox: React.FC<TextBoxProps> = ({
       disabled={disabled}
       readOnly={readOnly}
       required={required}
-      onChange={onChange}
-      onFocus={onFocus}
+      onChange={handleChange}
+      onFocus={handleFocus}
       ref={textBoxRef}
     />
   );
 };
 
-export default TextBox;
+// Memoize the component to prevent unnecessary re-renders
+export default React.memo(TextBox);

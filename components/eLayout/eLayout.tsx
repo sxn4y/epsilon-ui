@@ -1,9 +1,9 @@
 "use client";
 
-import React, { ReactNode, useEffect } from "react";
+import React, { ReactNode, useEffect, useMemo } from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
-import "./epsilon.css";
+import "epsilon-ui/dist/epsilon.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -52,16 +52,23 @@ const ELayout: React.FC<LayoutProps> = ({
   stagger = 0,
   staggerFrom = "start",
 }) => {
-  const axis = direction === "hor" ? "x" : "y";
-  const offset = reverse ? -distance : distance;
-  const rotation = reverse ? -angle : angle;
-  const percent = (1 - threshold) * 100;
+  // Memoize calculated values
+  const animationConfig = useMemo(() => {
+    const axis = direction === "hor" ? "x" : "y";
+    const offset = reverse ? -distance : distance;
+    const rotation = reverse ? -angle : angle;
+    const percent = (1 - threshold) * 100;
+    
+    return { axis, offset, rotation, percent };
+  }, [direction, reverse, distance, angle, threshold]);
 
   useEffect(() => {
     if (reveal) {
-      const el =
-        document.querySelectorAll(".epsilon-layout .epsilon-sublayout");
-      if (!el) return;
+      const el = document.querySelectorAll(".epsilon-layout .epsilon-sublayout");
+      if (!el.length) return;
+      
+      const { axis, offset, rotation, percent } = animationConfig;
+      
       let tl = once
         ? gsap.timeline({
             scrollTrigger: {
@@ -110,8 +117,13 @@ const ELayout: React.FC<LayoutProps> = ({
           from: staggerFrom,
         },
       });
+
+      // Cleanup function
+      return () => {
+        tl.kill();
+      };
     }
-  });
+  }, [reveal, once, duration, delay, opacity, scale, angle, threshold, distance, reverse, ease, direction, stagger, staggerFrom, animationConfig]);
   return (
     <div className={`w-full h-full overflow-hidden epsilon-layout flex flex-col md:flex-row ${className}`}>
       {children}
@@ -119,28 +131,37 @@ const ELayout: React.FC<LayoutProps> = ({
   );
 };
 
-const ESidebar: React.FC<SidebarProps> = ({
+const ESidebar: React.FC<SidebarProps> = React.memo(({
   children,
   className = "",
   side = "left",
 }) => {
+  // Memoize className calculation
+  const sidebarClassName = useMemo(() => {
+    const baseClasses = "w-full md:w-100 border-(--foreground)/30 bg-(--foreground)/4 p-4 epsilon-sublayout";
+    const sideClasses = side === "left" 
+      ? "border-b md:border-e" 
+      : "border-t md:border-s md:ml-auto";
+    
+    return `${sideClasses} ${baseClasses} ${className}`;
+  }, [side, className]);
+
   return (
-    <div
-      className={`${
-        side === "left" ? "border-b md:border-e" : "border-t md:border-s md:ml-auto"
-      } w-full md:w-100 border-(--foreground)/30 bg-(--foreground)/4 p-4 epsilon-sublayout ${className}`}
-    >
+    <div className={sidebarClassName}>
       {children}
     </div>
   );
-};
+});
 
-const EContentbar: React.FC<LayoutProps> = ({children, className}) => {
+const EContentbar: React.FC<LayoutProps> = React.memo(({children, className}) => {
   return (
     <div className={`w-full overflow-x-hidden overflow-y-scroll p-4 epsilon-sublayout ${className}`}>
       {children}
     </div>
   );
-}
+});
 
-export { ELayout, ESidebar, EContentbar };
+// Memoize the main ELayout component
+const MemoizedELayout = React.memo(ELayout);
+
+export { MemoizedELayout as ELayout, ESidebar, EContentbar };

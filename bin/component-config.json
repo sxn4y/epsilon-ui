@@ -1,0 +1,38 @@
+{
+  "components": {
+    "navbar": {
+      "files": ["navbar.tsx"],
+      "dependencies": ["button"],
+      "description": "Navigation bar component with mobile support"
+    },
+    "button": {
+      "files": ["button.tsx"],
+      "dependencies": [],
+      "description": "Interactive button component with parallax effects"
+    },
+    "card": {
+      "files": ["card.tsx"],
+      "dependencies": [],
+      "description": "Card component for content display"
+    },
+    "textbox": {
+      "files": ["textBox.tsx"],
+      "dependencies": [],
+      "description": "Text input component"
+    },
+    "scroll-reveal": {
+      "files": ["sReveal.tsx"],
+      "dependencies": [],
+      "description": "Scroll reveal animation component"
+    },
+    "eLayout": {
+      "files": ["eLayout.tsx"],
+      "dependencies": [],
+      "description": "Layout component"
+    }
+  },
+  "core": {
+    "files": ["epsilon.tsx", "epsilon.css"],
+    "description": "Core utilities and styles"
+  }
+}

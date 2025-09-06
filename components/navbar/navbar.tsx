@@ -1,8 +1,8 @@
 "use client";
 
-import React, { ReactNode, useState, useEffect } from "react";
-import "./epsilon.css";
-import Button from "./button";
+import React, { ReactNode, useState, useEffect, useMemo, useCallback } from "react";
+import "epsilon-ui/dist/epsilon.css";
+import Button from "../button/button";
 
 interface NavBarProps {
   children?: ReactNode;
@@ -35,30 +35,36 @@ const NavBar: React.FC<NavBarProps> = ({
   const [isOpen, setIsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
+  // Memoize mobile check function
+  const checkMobile = useCallback(() => {
+    setIsMobile(window.innerWidth < 768);
+  }, []);
+
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    
     checkMobile();
     window.addEventListener('resize', checkMobile);
     
     return () => window.removeEventListener('resize', checkMobile);
+  }, [checkMobile]);
+
+  // Memoize variant classes
+  const inBuiltClass = useMemo(() => {
+    switch (variant) {
+      case "secondary":
+        return "bg-(--foreground)/10 text-(--foreground)";
+      case "outline":
+        return "bg-(--foreground)/10 text-(--foreground) border-b border-(--foreground)/20";
+      case "fancy":
+        return "bg-linear-to-b from-(--foreground)/10 to-(--foreground)/6 text-(--foreground) border-b border-(--foreground)/20";
+      default:
+        return "bg-(--foreground) text-(--background)";
+    }
+  }, [variant]);
+
+  // Memoize toggle handler
+  const handleToggle = useCallback(() => {
+    setIsOpen(prev => !prev);
   }, []);
-
-  let inBuiltClass = "bg-(--foreground) text-(--background)";
-
-  switch (variant) {
-    case "secondary":
-      inBuiltClass = "bg-(--foreground)/10 text-(--foreground)";
-      break;
-    case "outline":
-      inBuiltClass = "bg-(--foreground)/10 text-(--foreground) border-b border-(--foreground)/20";
-      break;
-    case "fancy":
-      inBuiltClass = "bg-linear-to-b from-(--foreground)/10 to-(--foreground)/6 text-(--foreground) border-b border-(--foreground)/20";
-      break;
-  }
 
   return (
     <nav className={`w-full ${inBuiltClass} ${className}`}>
@@ -72,7 +78,7 @@ const NavBar: React.FC<NavBarProps> = ({
           </div>
           <div className="md:hidden">
             <Button
-              onClick={() => setIsOpen(!isOpen)}
+              onClick={handleToggle}
               className="inline-flex items-center justify-center"
               variant="outline"
               parallax
@@ -115,7 +121,7 @@ const NavBar: React.FC<NavBarProps> = ({
   );
 };
 
-const NavItem: React.FC<NavItemProps> = ({
+const NavItem: React.FC<NavItemProps> = React.memo(({
   children,
   className,
   href = "#",
@@ -127,6 +133,9 @@ const NavItem: React.FC<NavItemProps> = ({
       <Button variant={variant} disabled={disabled} className={className}>{children}</Button>
     </a>
   );
-};
+});
 
-export { NavBar, NavItem };
+// Memoize the main NavBar component
+const MemoizedNavBar = React.memo(NavBar);
+
+export { MemoizedNavBar as NavBar, NavItem };

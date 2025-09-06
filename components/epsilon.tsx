@@ -7,13 +7,16 @@ export function applyParallax(
   tiltFactor: number
 ) {
   const element = elementRef.current;
-  let handleMouseMove = (e: Event) => {},
-    handleMouseLeave = () => {};
+  
+  if (!element || !parallax || tiltFactor === 0) return;
 
-  if (!element) return;
-
-  if (parallax) {
-    handleMouseMove = (e: Event) => {
+  // Throttle mouse move events for better performance
+  let rafId: number | null = null;
+  
+  const handleMouseMove = (e: Event) => {
+    if (rafId) return; // Skip if animation frame is already scheduled
+    
+    rafId = requestAnimationFrame(() => {
       const mouseEvent = e as MouseEvent;
       const rect = element.getBoundingClientRect();
       const x = mouseEvent.clientX - rect.left;
@@ -26,19 +29,25 @@ export function applyParallax(
       element.style.setProperty("--x", `${(x / element.clientWidth) * 100}%`);
       element.style.setProperty("--y", `${(y / element.clientHeight) * 100}%`);
       element.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
-    };
+      rafId = null;
+    });
+  };
 
-    handleMouseLeave = () => {
-      element.style.transform =
-        "perspective(1000px) rotateX(0deg) rotateY(0deg)";
-    };
+  const handleMouseLeave = () => {
+    if (rafId) {
+      cancelAnimationFrame(rafId);
+      rafId = null;
+    }
+    element.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg)";
+  };
 
-    element.addEventListener("mousemove", handleMouseMove);
-
-    element.addEventListener("mouseleave", handleMouseLeave);
-  }
+  element.addEventListener("mousemove", handleMouseMove, { passive: true });
+  element.addEventListener("mouseleave", handleMouseLeave);
 
   return () => {
+    if (rafId) {
+      cancelAnimationFrame(rafId);
+    }
     element.removeEventListener("mousemove", handleMouseMove);
     element.removeEventListener("mouseleave", handleMouseLeave);
   };

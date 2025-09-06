@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useEffect, useRef } from "react";
+import React, { ReactNode, useEffect, useRef, useMemo, useCallback } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
@@ -41,14 +41,23 @@ const SReveal: React.FC<sRevealProps> = ({
   inline = false,
 }) => {
   const ref = useRef(null);
-  const axis = direction === "hor" ? "x" : "y";
-  const offset = reverse ? -distance : distance;
-  const rotation = reverse ? -angle : angle;
-  const percent = (1 - threshold) * 100;
+  
+  // Memoize calculated values
+  const animationConfig = useMemo(() => {
+    const axis = direction === "hor" ? "x" : "y";
+    const offset = reverse ? -distance : distance;
+    const rotation = reverse ? -angle : angle;
+    const percent = (1 - threshold) * 100;
+    
+    return { axis, offset, rotation, percent };
+  }, [direction, reverse, distance, angle, threshold]);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    
+    const { axis, offset, rotation, percent } = animationConfig;
+    
     let tl = once
       ? gsap.timeline({
           scrollTrigger: {
@@ -93,9 +102,15 @@ const SReveal: React.FC<sRevealProps> = ({
       ease,
       delay,
     });
-  });
+
+    // Cleanup function
+    return () => {
+      tl.kill();
+    };
+  }, [once, duration, delay, opacity, scale, angle, threshold, distance, reverse, ease, direction, animationConfig]);
 
   return <div ref={ref} className={`${className} ${inline ? "inline" : "block"}`}>{children}</div>;
 };
 
-export default SReveal;
+// Memoize the component to prevent unnecessary re-renders
+export default React.memo(SReveal);
