@@ -1,6 +1,6 @@
 {
   "name": "epsilon-ui",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "bin": {
     "epsilon-ui": "bin/index.cjs"
   },
@@ -97,7 +97,6 @@
     "shebang-regex": "^3.0.0",
     "signal-exit": "^4.1.0",
     "simple-swizzle": "^0.2.2",
-    "source-map": "^0.8.0-beta.0",
     "source-map-js": "^1.2.1",
     "streamsearch": "^1.1.0",
     "string-width": "^5.1.2",
@@ -126,7 +125,7 @@
     "yallist": "^5.0.0"
   },
   "scripts": {
-    "build": "tsc && cp components/epsilon.css dist/epsilon.css",
+    "build": "tsc && cp components/epsilon.css dist/epsilon.css && cp components/epsilon.tsx dist/epsilon.tsx && node scripts/fix-epsilon-imports.js",
     "prepublishOnly": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

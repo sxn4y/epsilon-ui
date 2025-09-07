@@ -19,7 +19,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EContentbar = exports.ESidebar = exports.ELayout = exports.SReveal = exports.TextBox = exports.Card = exports.Button = exports.NavItem = exports.NavBar = exports.applyParallax = void 0;
 // Core utilities and styles
-var epsilon_1 = require("./dist/epsilon");
+var epsilon_1 = require("./epsilon");
 Object.defineProperty(exports, "applyParallax", { enumerable: true, get: function () { return epsilon_1.applyParallax; } });
 // Components
 var navbar_1 = require("./components/navbar/navbar");

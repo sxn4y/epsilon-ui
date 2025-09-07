@@ -1,4 +1,4 @@
-export { applyParallax } from './dist/epsilon';
+export { applyParallax } from './components/epsilon';
 export { NavBar, NavItem } from './components/navbar/navbar';
 export { default as Button } from './components/button/button';
 export { default as Card } from './components/card/card';

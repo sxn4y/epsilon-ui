@@ -2,7 +2,7 @@
 
 import React, { ReactNode, useEffect, useMemo, useCallback } from "react";
 import "epsilon-ui/dist/epsilon.css";
-import { applyParallax } from "../../dist/epsilon";
+import { applyParallax } from "../epsilon";
 
 export interface ButtonProps {
   children?: ReactNode;

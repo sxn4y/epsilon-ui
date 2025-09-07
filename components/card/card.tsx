@@ -2,7 +2,7 @@
 
 import React, { ReactNode, useEffect, useMemo } from "react";
 import "epsilon-ui/dist/epsilon.css";
-import { applyParallax } from "../../dist/epsilon";
+import { applyParallax } from "../epsilon";
 
 export interface CardProps {
   children?: ReactNode;
