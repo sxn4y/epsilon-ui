@@ -23,11 +23,11 @@
   "include": [
     "index.ts",
     "components/**/*"
-  ],
+, "dist/epsilon.tsx"  ],
   "exclude": [
     "node_modules",
     "dist",
     "playground",
-    "components/epsilon.tsx"
+    "dist/epsilon.tsx"
   ]
 }

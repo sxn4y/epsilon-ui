@@ -1,5 +1,5 @@
 // Core utilities and styles
-export { applyParallax } from './components/epsilon';
+export { applyParallax } from './dist/epsilon';
 
 // Components
 export { NavBar, NavItem } from './components/navbar/navbar';
