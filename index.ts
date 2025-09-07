@@ -12,6 +12,7 @@ export { ELayout, ESidebar, EContentbar } from './components/eLayout/eLayout';
 // Re-export types
 export type { ButtonProps } from './components/button/button';
 export type { CardProps } from './components/card/card';
+export type { TextBoxProps } from './components/textbox/textBox';
 
 // Type System
 export * from './components/type-system';

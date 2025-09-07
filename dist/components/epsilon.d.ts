@@ -1,2 +1,0 @@
-export declare function applyParallax(elementRef: React.RefObject<HTMLButtonElement | null> | React.RefObject<HTMLInputElement | null> | React.RefObject<HTMLDivElement | null>, parallax: boolean, tiltFactor: number): (() => void) | undefined;
-//# sourceMappingURL=epsilon.d.ts.map
