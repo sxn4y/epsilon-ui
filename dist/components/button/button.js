@@ -37,7 +37,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const jsx_runtime_1 = require("react/jsx-runtime");
 const react_1 = __importStar(require("react"));
 require("epsilon-ui/dist/epsilon.css");
-const epsilon_1 = require("../epsilon");
+const epsilon_1 = require("../../dist/epsilon");
 const Button = ({ children, className = "w-fit h-[100px]", parallax = false, tiltFactor = 20, autoFocus = false, disabled = false, form, formAction, formEncType, formMethod, formNoValidate = false, formTarget, name, type = "button", value, onClick, onMouseEnter, onMouseLeave, onFocus, variant = "primary", }) => {
     const buttonRef = react_1.default.useRef(null);
     // Memoize touch device detection
