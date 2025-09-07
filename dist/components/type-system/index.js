@@ -18,7 +18,7 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.useBaselineRhythm = exports.useComponentSize = exports.useFluidTypography = exports.useResponsiveTypography = exports.useTypeSystem = exports.generateSpacingSystem = exports.generateTypographySystem = exports.createVerticalRhythm = exports.remToPx = exports.pxToRem = exports.createModularScale = exports.generateComponentClasses = exports.createBaselineRhythm = exports.createComponentStyles = exports.createFluidTypography = exports.createResponsiveFontSize = exports.generateTypeSystemCSS = exports.TYPOGRAPHY = exports.COMPONENT_SCALE = exports.RADIUS_SCALE = exports.SPACING_SCALE = exports.TYPE_SCALE = exports.BASE_SPACING = exports.BASE_LINE_HEIGHT = exports.BASE_FONT_SIZE = exports.GOLDEN_RATIO = void 0;
+exports.useBaselineRhythm = exports.useComponentSize = exports.useFluidTypography = exports.useResponsiveTypography = exports.useTypeSystem = exports.generateSpacingSystem = exports.generateTypographySystem = exports.createVerticalRhythm = exports.remToPx = exports.pxToRem = exports.createModularScale = exports.generateComponentClasses = exports.createBaselineRhythm = exports.createComponentStyles = exports.createFluidTypography = exports.createResponsiveFontSize = exports.generateTypeSystemCSS = exports.TYPOGRAPHY = exports.COMPONENT_SCALE = exports.RADIUS_SCALE = exports.SPACING_SCALE = exports.TYPE_SCALE = exports.BASE_SPACING = exports.BASE_LINE_HEIGHT = exports.BASE_FONT_SIZE = exports.GOLDEN_RATIO = exports.useBoundingBoxInfo = exports.useBoundingBoxCorrection = void 0;
 // Export all types and constants
 __exportStar(require("./types"), exports);
 // Export utility functions
@@ -27,6 +27,9 @@ __exportStar(require("./utils"), exports);
 __exportStar(require("./useTypeSystem"), exports);
 // Export bounding box utilities
 __exportStar(require("./boundingBox"), exports);
+var useBoundingBox_1 = require("./useBoundingBox");
+Object.defineProperty(exports, "useBoundingBoxCorrection", { enumerable: true, get: function () { return useBoundingBox_1.useBoundingBoxCorrection; } });
+Object.defineProperty(exports, "useBoundingBoxInfo", { enumerable: true, get: function () { return useBoundingBox_1.useBoundingBoxInfo; } });
 // Re-export commonly used items for convenience
 var types_1 = require("./types");
 Object.defineProperty(exports, "GOLDEN_RATIO", { enumerable: true, get: function () { return types_1.GOLDEN_RATIO; } });

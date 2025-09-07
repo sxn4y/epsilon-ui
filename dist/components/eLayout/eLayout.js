@@ -126,7 +126,7 @@ const ESidebar = react_1.default.memo(({ children, className = "", side = "left"
 });
 exports.ESidebar = ESidebar;
 const EContentbar = react_1.default.memo(({ children, className }) => {
-    return ((0, jsx_runtime_1.jsx)("div", { className: `w-full overflow-x-hidden overflow-y-scroll p-4 epsilon-sublayout ${className}`, children: children }));
+    return ((0, jsx_runtime_1.jsx)("div", { className: `w-full overflow-x-hidden overflow-y-scroll p-lg epsilon-sublayout text-body ${className}`, children: children }));
 });
 exports.EContentbar = EContentbar;
 // Memoize the main ELayout component

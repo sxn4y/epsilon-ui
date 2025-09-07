@@ -6,6 +6,7 @@ export * from './types';
 export * from './utils';
 export * from './useTypeSystem';
 export * from './boundingBox';
+export { useBoundingBoxCorrection, useBoundingBoxInfo } from './useBoundingBox';
 export { GOLDEN_RATIO, BASE_FONT_SIZE, BASE_LINE_HEIGHT, BASE_SPACING, TYPE_SCALE, SPACING_SCALE, RADIUS_SCALE, COMPONENT_SCALE, TYPOGRAPHY, } from './types';
 export { generateTypeSystemCSS, createResponsiveFontSize, createFluidTypography, createComponentStyles, createBaselineRhythm, generateComponentClasses, createModularScale, pxToRem, remToPx, createVerticalRhythm, generateTypographySystem, generateSpacingSystem, } from './utils';
 export { useTypeSystem, useResponsiveTypography, useFluidTypography, useComponentSize, useBaselineRhythm, } from './useTypeSystem';

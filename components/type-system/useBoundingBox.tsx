@@ -6,7 +6,8 @@ import React from 'react';
 import { 
   applyBoundingBoxCorrection, 
   removeBoundingBoxCorrection, 
-  hasBoundingBoxCorrection 
+  hasBoundingBoxCorrection,
+  getBoundingBoxInfo
 } from './boundingBox';
 
 /**
@@ -45,7 +46,6 @@ export const useBoundingBoxInfo = () => {
   const measure = React.useCallback((element: HTMLElement) => {
     if (!element) return;
     
-    const { getBoundingBoxInfo } = require('./boundingBox');
     const boundingBoxInfo = getBoundingBoxInfo(element);
     setInfo(boundingBoxInfo);
   }, []);
