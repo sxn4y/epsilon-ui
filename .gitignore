@@ -19,6 +19,7 @@
 
 # production
 /build
+/dist/*
 
 # misc
 .DS_Store
@@ -43,3 +44,14 @@ next-env.d.ts
 # prevent generated js files in components
 components/**/*.js
 components/**/*.js.map
+
+# test directories
+/test
+/playground
+/test-final
+/test-npm
+
+# tarballs
+*.tgz
+epsilon-ui-*.tgz
+

@@ -37,7 +37,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const jsx_runtime_1 = require("react/jsx-runtime");
 const react_1 = __importStar(require("react"));
 require("epsilon-ui/dist/epsilon.css");
-const epsilon_1 = require("epsilon-ui/dist/components/epsilon");
+const epsilon_1 = require("../epsilon");
 const Card = ({ children, className = "w-fit h-[100px]", parallax = false, tiltFactor = 20, variant = "secondary", }) => {
     const cardRef = react_1.default.useRef(null);
     // Memoize touch device detection
@@ -53,7 +53,7 @@ const Card = ({ children, className = "w-fit h-[100px]", parallax = false, tiltF
     }, [isTouchDevice, tiltFactor]);
     // Memoize variant classes to prevent recalculation
     const inBuiltClass = (0, react_1.useMemo)(() => {
-        const baseClasses = "rounded-(--s2) outline-0 delay-25 transition-[outline] transition-[background]";
+        const baseClasses = "rounded-base text-body outline-0 delay-25 transition-[outline] transition-[background]";
         switch (variant) {
             case "secondary":
                 return `${baseClasses} text-(--foreground) bg-(--foreground)/10 outline-(--foreground)/5 hover:bg-(--foreground)/9 focus:outline-3`;
@@ -74,7 +74,7 @@ const Card = ({ children, className = "w-fit h-[100px]", parallax = false, tiltF
     (0, react_1.useEffect)(() => {
         (0, epsilon_1.applyParallax)(cardRef, parallax, effectiveTiltFactor);
     }, [parallax, effectiveTiltFactor]);
-    return ((0, jsx_runtime_1.jsxs)("div", { className: `${parallax ? "glow-effect" : "no-glow-effect"} ${inBuiltClass} p-6 h-fit font-medium text-(length:--s3) overflow-hidden ${className}`, ref: cardRef, children: [children, (0, jsx_runtime_1.jsx)("div", { className: "glow-container" })] }));
+    return ((0, jsx_runtime_1.jsxs)("div", { className: `${parallax ? "glow-effect" : "no-glow-effect"} ${inBuiltClass} p-lg h-fit overflow-hidden ${className}`, ref: cardRef, children: [children, (0, jsx_runtime_1.jsx)("div", { className: "glow-container" })] }));
 };
 // Memoize the component to prevent unnecessary re-renders
 exports.default = react_1.default.memo(Card);

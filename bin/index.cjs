@@ -110,22 +110,39 @@ function installCoreFiles(projectRoot) {
   const indexDest = path.join(packageDir, 'index.ts');
   if (fs.existsSync(indexSrc)) {
     let indexContent = fs.readFileSync(indexSrc, 'utf8');
-    // Update the epsilon import path for the installed package
-    indexContent = indexContent.replace('./components/epsilon', './dist/epsilon');
+    // Keep the epsilon import path as is since epsilon.tsx stays in components
     fs.writeFileSync(indexDest, indexContent);
     logSuccess('Installed main index file');
   }
   
-  // Copy core files to dist
+  // Create components directory in the package
+  const componentsDir = path.join(packageDir, 'components');
+  if (!fs.existsSync(componentsDir)) {
+    fs.mkdirSync(componentsDir, { recursive: true });
+  }
+  
+  // Copy core files - epsilon.tsx to components, epsilon.css to dist
   for (const file of config.core.files) {
     const srcPath = path.join(__dirname, '..', 'components', file);
-    const destPath = path.join(distDir, file);
     
-    if (fs.existsSync(srcPath)) {
-      copyFile(srcPath, destPath);
-      logSuccess(`Installed core file: ${file}`);
+    if (file === 'epsilon.tsx') {
+      // Keep epsilon.tsx in components folder
+      const destPath = path.join(componentsDir, file);
+      if (fs.existsSync(srcPath)) {
+        copyFile(srcPath, destPath);
+        logSuccess(`Installed core file: ${file}`);
+      } else {
+        logWarning(`Core file not found: ${file}`);
+      }
     } else {
-      logWarning(`Core file not found: ${file}`);
+      // Other files (like epsilon.css) go to dist
+      const destPath = path.join(distDir, file);
+      if (fs.existsSync(srcPath)) {
+        copyFile(srcPath, destPath);
+        logSuccess(`Installed core file: ${file}`);
+      } else {
+        logWarning(`Core file not found: ${file}`);
+      }
     }
   }
   

@@ -138,7 +138,7 @@ const ESidebar: React.FC<SidebarProps> = React.memo(({
 }) => {
   // Memoize className calculation
   const sidebarClassName = useMemo(() => {
-    const baseClasses = "w-full md:w-100 border-(--foreground)/30 bg-(--foreground)/4 p-4 epsilon-sublayout";
+    const baseClasses = "w-full md:w-100 border-(--foreground)/30 bg-(--foreground)/4 p-lg epsilon-sublayout text-body";
     const sideClasses = side === "left" 
       ? "border-b md:border-e" 
       : "border-t md:border-s md:ml-auto";
@@ -155,7 +155,7 @@ const ESidebar: React.FC<SidebarProps> = React.memo(({
 
 const EContentbar: React.FC<LayoutProps> = React.memo(({children, className}) => {
   return (
-    <div className={`w-full overflow-x-hidden overflow-y-scroll p-4 epsilon-sublayout ${className}`}>
+    <div className={`w-full overflow-x-hidden overflow-y-scroll p-lg epsilon-sublayout text-body ${className}`}>
       {children}
     </div>
   );

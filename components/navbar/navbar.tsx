@@ -49,15 +49,17 @@ const NavBar: React.FC<NavBarProps> = ({
 
   // Memoize variant classes
   const inBuiltClass = useMemo(() => {
+    const baseClasses = "text-body";
+    
     switch (variant) {
       case "secondary":
-        return "bg-(--foreground)/10 text-(--foreground)";
+        return `${baseClasses} bg-(--foreground)/10 text-(--foreground)`;
       case "outline":
-        return "bg-(--foreground)/10 text-(--foreground) border-b border-(--foreground)/20";
+        return `${baseClasses} bg-(--foreground)/10 text-(--foreground) border-b border-(--foreground)/20`;
       case "fancy":
-        return "bg-linear-to-b from-(--foreground)/10 to-(--foreground)/6 text-(--foreground) border-b border-(--foreground)/20";
+        return `${baseClasses} bg-linear-to-b from-(--foreground)/10 to-(--foreground)/6 text-(--foreground) border-b border-(--foreground)/20`;
       default:
-        return "bg-(--foreground) text-(--background)";
+        return `${baseClasses} bg-(--foreground) text-(--background)`;
     }
   }, [variant]);
 
@@ -69,7 +71,7 @@ const NavBar: React.FC<NavBarProps> = ({
   return (
     <nav className={`w-full ${inBuiltClass} ${className}`}>
       <div className="max-w-7xl mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-16 p-base">
           <div className="flex-shrink-0">
             {brand}
           </div>
@@ -111,8 +113,8 @@ const NavBar: React.FC<NavBarProps> = ({
         </div>
 
         {/* Mobile Menu */}
-        <div className={`${isOpen ? 'block' : 'hidden'} md:hidden pb-4`}>
-          <div className="flex flex-col space-y-2">
+        <div className={`${isOpen ? 'block' : 'hidden'} md:hidden pb-base`}>
+          <div className="flex flex-col space-y-sm">
             {children}
           </div>
         </div>

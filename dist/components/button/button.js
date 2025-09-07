@@ -37,7 +37,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const jsx_runtime_1 = require("react/jsx-runtime");
 const react_1 = __importStar(require("react"));
 require("epsilon-ui/dist/epsilon.css");
-const epsilon_1 = require("epsilon-ui/dist/components/epsilon");
+const epsilon_1 = require("../epsilon");
 const Button = ({ children, className = "w-fit h-[100px]", parallax = false, tiltFactor = 20, autoFocus = false, disabled = false, form, formAction, formEncType, formMethod, formNoValidate = false, formTarget, name, type = "button", value, onClick, onMouseEnter, onMouseLeave, onFocus, variant = "primary", }) => {
     const buttonRef = react_1.default.useRef(null);
     // Memoize touch device detection
@@ -53,7 +53,7 @@ const Button = ({ children, className = "w-fit h-[100px]", parallax = false, til
     }, [isTouchDevice, tiltFactor]);
     // Memoize variant classes to prevent recalculation
     const inBuiltClass = (0, react_1.useMemo)(() => {
-        const baseClasses = "px-3 py-1.5 rounded-(--s2) outline-0 delay-25 transition-[outline] transition-[background]";
+        const baseClasses = "size-base text-button outline-0 delay-25 transition-[outline] transition-[background]";
         switch (variant) {
             case "secondary":
                 return `${baseClasses} text-(--foreground) bg-(--foreground)/10 outline-(--foreground)/5 hover:bg-(--foreground)/9 focus:outline-3`;
@@ -87,7 +87,7 @@ const Button = ({ children, className = "w-fit h-[100px]", parallax = false, til
     (0, react_1.useEffect)(() => {
         (0, epsilon_1.applyParallax)(buttonRef, parallax, effectiveTiltFactor);
     }, [parallax, effectiveTiltFactor]);
-    return ((0, jsx_runtime_1.jsxs)("button", { autoFocus: autoFocus, disabled: disabled, form: form, formAction: formAction, formEncType: formEncType, formMethod: formMethod, formNoValidate: formNoValidate, formTarget: formTarget, name: name, type: type, value: value, onClick: handleClick, onMouseEnter: handleMouseEnter, onMouseLeave: handleMouseLeave, onFocus: handleFocus, className: `${parallax ? "glow-effect" : "no-glow-effect"} ${inBuiltClass} h-fit font-medium text-(length:--s3) overflow-hidden ${className}`, ref: buttonRef, children: [children, (0, jsx_runtime_1.jsx)("div", { className: "glow-container" })] }));
+    return ((0, jsx_runtime_1.jsxs)("button", { autoFocus: autoFocus, disabled: disabled, form: form, formAction: formAction, formEncType: formEncType, formMethod: formMethod, formNoValidate: formNoValidate, formTarget: formTarget, name: name, type: type, value: value, onClick: handleClick, onMouseEnter: handleMouseEnter, onMouseLeave: handleMouseLeave, onFocus: handleFocus, className: `${parallax ? "glow-effect" : "no-glow-effect"} ${inBuiltClass} h-fit overflow-hidden ${className}`, ref: buttonRef, children: [children, (0, jsx_runtime_1.jsx)("div", { className: "glow-container" })] }));
 };
 // Memoize the component to prevent unnecessary re-renders
 exports.default = react_1.default.memo(Button);

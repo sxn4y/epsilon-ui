@@ -45,7 +45,7 @@ const Card: React.FC<CardProps> = ({
 
   // Memoize variant classes to prevent recalculation
   const inBuiltClass = useMemo(() => {
-    const baseClasses = "rounded-(--s2) outline-0 delay-25 transition-[outline] transition-[background]";
+    const baseClasses = "rounded-base text-body outline-0 delay-25 transition-[outline] transition-[background]";
     
     switch (variant) {
       case "secondary":
@@ -73,7 +73,7 @@ const Card: React.FC<CardProps> = ({
     <div
       className={`${
         parallax ? "glow-effect" : "no-glow-effect"
-      } ${inBuiltClass} p-6 h-fit font-medium text-(length:--s3) overflow-hidden ${className}`}
+      } ${inBuiltClass} p-lg h-fit overflow-hidden ${className}`}
       ref={cardRef}
     >
       {children}

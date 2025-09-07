@@ -52,7 +52,7 @@ const TextBox = ({ className = "", parallax = false, tiltFactor = 20, placeholde
     }, [isTouchDevice, tiltFactor]);
     // Memoize variant classes
     const inBuiltClass = (0, react_1.useMemo)(() => {
-        const baseClasses = "px-3 py-1.5 rounded-(--s2) text-(length:--s3) font-medium overflow-hidden outline-0 delay-25 transition-[outline] transition-[background]";
+        const baseClasses = "size-base text-body overflow-hidden outline-0 delay-25 transition-[outline] transition-[background]";
         switch (variant) {
             case "secondary":
                 return `${baseClasses} text-(--foreground) bg-(--foreground)/10 outline-(--foreground)/5 hover:bg-(--foreground)/9 focus:outline-3`;

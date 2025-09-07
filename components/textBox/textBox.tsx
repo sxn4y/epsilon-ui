@@ -65,7 +65,7 @@ const TextBox: React.FC<TextBoxProps> = ({
 
   // Memoize variant classes
   const inBuiltClass = useMemo(() => {
-    const baseClasses = "px-3 py-1.5 rounded-(--s2) text-(length:--s3) font-medium overflow-hidden outline-0 delay-25 transition-[outline] transition-[background]";
+    const baseClasses = "size-base text-body overflow-hidden outline-0 delay-25 transition-[outline] transition-[background]";
     
     switch (variant) {
       case "secondary":

@@ -12,6 +12,10 @@ export * from './utils';
 // Export React hooks
 export * from './useTypeSystem';
 
+// Export bounding box utilities
+export * from './boundingBox';
+export { useBoundingBoxCorrection, useBoundingBoxInfo } from './useBoundingBox';
+
 // Re-export commonly used items for convenience
 export {
   GOLDEN_RATIO,

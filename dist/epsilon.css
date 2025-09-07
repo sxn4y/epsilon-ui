@@ -342,3 +342,37 @@
   font-size: var(--component-2xl-font-size);
   border-radius: var(--component-2xl-radius);
 }
+
+/* Bounding Box Correction Classes */
+.bounding-box-correct {
+  position: relative;
+}
+
+.bounding-box-correct::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.bounding-box-correct[data-bounding-box-corrected="true"] {
+  padding-top: var(--adjusted-padding-top, 0);
+}
+
+/* Auto-correct bounding box for typography elements */
+.text-display.bounding-box-correct,
+.text-h1.bounding-box-correct,
+.text-h2.bounding-box-correct,
+.text-h3.bounding-box-correct,
+.text-h4.bounding-box-correct,
+.text-h5.bounding-box-correct,
+.text-h6.bounding-box-correct,
+.text-body.bounding-box-correct,
+.text-body-large.bounding-box-correct,
+.text-body-small.bounding-box-correct,
+.text-caption.bounding-box-correct {
+  /* These will be automatically corrected by JavaScript */
+}

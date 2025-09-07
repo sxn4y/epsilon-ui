@@ -116,7 +116,7 @@ const ELayout = ({ children, className = "", reveal = false, duration = 0.8, del
 const ESidebar = react_1.default.memo(({ children, className = "", side = "left", }) => {
     // Memoize className calculation
     const sidebarClassName = (0, react_1.useMemo)(() => {
-        const baseClasses = "w-full md:w-100 border-(--foreground)/30 bg-(--foreground)/4 p-4 epsilon-sublayout";
+        const baseClasses = "w-full md:w-100 border-(--foreground)/30 bg-(--foreground)/4 p-lg epsilon-sublayout text-body";
         const sideClasses = side === "left"
             ? "border-b md:border-e"
             : "border-t md:border-s md:ml-auto";

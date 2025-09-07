@@ -25,6 +25,8 @@ __exportStar(require("./types"), exports);
 __exportStar(require("./utils"), exports);
 // Export React hooks
 __exportStar(require("./useTypeSystem"), exports);
+// Export bounding box utilities
+__exportStar(require("./boundingBox"), exports);
 // Re-export commonly used items for convenience
 var types_1 = require("./types");
 Object.defineProperty(exports, "GOLDEN_RATIO", { enumerable: true, get: function () { return types_1.GOLDEN_RATIO; } });
