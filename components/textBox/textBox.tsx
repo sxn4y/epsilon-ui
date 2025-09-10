@@ -1,7 +1,7 @@
 "use client";
 
 import React, { ReactNode, useEffect, useMemo, useCallback } from "react";
-import "epsilon-ui/dist/epsilon.css";
+import "../epsilon.css";
 
 export interface TextBoxProps {
   className?: string;

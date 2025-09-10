@@ -1,7 +1,7 @@
 "use client";
 
 import React, { ReactNode, useState, useEffect, useMemo, useCallback } from "react";
-import "epsilon-ui/dist/epsilon.css";
+import "../epsilon.css";
 import Button from "../button/button";
 
 interface NavBarProps {

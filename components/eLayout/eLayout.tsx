@@ -3,7 +3,7 @@
 import React, { ReactNode, useEffect, useMemo } from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
-import "epsilon-ui/dist/epsilon.css";
+import "../epsilon.css";
 
 gsap.registerPlugin(ScrollTrigger);
 

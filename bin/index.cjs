@@ -96,13 +96,9 @@ function installCoreFiles(projectRoot) {
   
   // Create epsilon-ui package directory
   const packageDir = path.join(projectRoot, 'node_modules', 'epsilon-ui');
-  const distDir = path.join(packageDir, 'dist');
   
   if (!fs.existsSync(packageDir)) {
     fs.mkdirSync(packageDir, { recursive: true });
-  }
-  if (!fs.existsSync(distDir)) {
-    fs.mkdirSync(distDir, { recursive: true });
   }
   
   // Copy and modify main index file for installed package
@@ -121,30 +117,19 @@ function installCoreFiles(projectRoot) {
     fs.mkdirSync(componentsDir, { recursive: true });
   }
   
-  // Copy core files - epsilon.tsx to components, epsilon.css to dist
+  // Copy core files - all files go to components folder
   for (const file of config.core.files) {
     const srcPath = path.join(__dirname, '..', 'components', file);
+    const destPath = path.join(componentsDir, file);
     
-    if (file === 'epsilon.tsx') {
-      // Keep epsilon.tsx in components folder
-      const destPath = path.join(componentsDir, file);
-      if (fs.existsSync(srcPath)) {
-        copyFile(srcPath, destPath);
-        logSuccess(`Installed core file: ${file}`);
-      } else {
-        logWarning(`Core file not found: ${file}`);
-      }
+    if (fs.existsSync(srcPath)) {
+      copyFile(srcPath, destPath);
+      logSuccess(`Installed core file: ${file}`);
     } else {
-      // Other files (like epsilon.css) go to dist
-      const destPath = path.join(distDir, file);
-      if (fs.existsSync(srcPath)) {
-        copyFile(srcPath, destPath);
-        logSuccess(`Installed core file: ${file}`);
-      } else {
-        logWarning(`Core file not found: ${file}`);
-      }
+      logWarning(`Core file not found: ${file}`);
     }
   }
+  
   
   // Create package.json for epsilon-ui
   const packageJson = {
@@ -152,7 +137,7 @@ function installCoreFiles(projectRoot) {
     version: "1.0.24",
     main: "index.ts",
     types: "index.ts",
-    files: ["index.ts", "dist/", "components/"],
+    files: ["index.ts", "components/"],
     peerDependencies: {
       "react": ">=16.8.0",
       "react-dom": ">=16.8.0"
@@ -306,9 +291,11 @@ async function installComponents(components, options = {}) {
     }
   }
   
+  
   if (imports.length > 0) {
     log(`import { ${imports.join(', ')} } from "epsilon-ui";`, 'cyan');
   }
+  
 }
 
 // List available components
@@ -321,6 +308,10 @@ function listComponents() {
       log(`    Dependencies: ${componentConfig.dependencies.join(', ')}`, 'yellow');
     }
   }
+  
+  // Show core components
+  logInfo('\nCore components (automatically installed):');
+  log(`  core: ${config.core.description}`, 'green');
 }
 
 // Parse command line arguments
